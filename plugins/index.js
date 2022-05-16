@@ -33,7 +33,9 @@ module.exports = (on, config) => {
         '--disable-renderer-backgrounding',
       );
     }
-    if (!process.env.SKIP_METAMASK_INSTALL) {
+    const skipMetamaskInstall = ((process.env.SKIP_METAMASK_INSTALL?.toLowerCase() === 'true') || 
+                                 (process.env.SKIP_METAMASK_INSTALL?.toLowerCase() === '1')) || false;
+    if (! skipMetamaskInstall) {
       // NOTE: extensions cannot be loaded in headless Chrome
       const metamaskPath = await helpers.prepareMetamask(
         process.env.METAMASK_VERSION || '9.7.1',
